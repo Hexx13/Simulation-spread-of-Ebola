@@ -65,7 +65,10 @@ int main(){
     int neighbour_live_cell;
     int neighbour_infect_cell;
     int neighbour_recovered_cell;
-
+      printf("0 = dead\n");
+    printf("1 = alive\n");
+    printf("2 = infected\n");
+      printf("3 = recovered\n");
 
  
     //generate matrix canvas with random values (live and dead cells)
