@@ -2,8 +2,8 @@
 #include <stdlib.h>
 
 //change row and column value to set the canvas size
-int row = 5;
-int col = 4;
+int row = 10;
+int col = 10;
 //creates row boundary
 int row_line(){
     printf("\n");
@@ -57,18 +57,21 @@ int main(){
             neighbour_live_cell = count_live_neighbour_cell(a,i,j);
             if(a[i][j]==1 && (neighbour_live_cell==2 || neighbour_live_cell==3)){
                 b[i][j]=1;
+                a[i][j]=b[i][j];
             }
  
             else if(a[i][j]==0 && neighbour_live_cell==3){
                 b[i][j]=1;
+                a[i][j]=b[i][j];
             }
  
             else{
                 b[i][j]=0;
+                a[i][j]=b[i][j];
             }
         }
     }
- 
+
     //print next generation
     printf("\nNext Generation:");
      row_line(row);
