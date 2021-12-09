@@ -45,7 +45,7 @@ void stateFunc(char *cell) {
                 }
             } else if (cell >= 70 || cell <= 89) {
                 if (cell > 70)
-                    *cell = cell--;
+                    *cell = cell++;
             } else {
                 *cell = 'A';
             }
