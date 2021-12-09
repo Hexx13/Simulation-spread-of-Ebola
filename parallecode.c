@@ -11,15 +11,15 @@ int row_line(){
     printf("\n");
 }
  
-//returns the count of alive neighbours
-int count_live_normal_cell(int a[row][col], int r, int c){
+//returns the count of infected vector and neighbors
+int count_infect_total_cell(int a[row][col], int r, int c){
     int i, j, count=0;
     for(i=r-1; i<=r+1; i++){
         for(j=c-1;j<=c+1;j++){
             if((i==r && j==c) || (i<0 || j<0) || (i>=row || j>=col)){
                 continue;
             }
-            if(a[i][j]==1){
+            if(a[i][j]==1){//replace with infect char
                 count++;
             }
         }
@@ -28,15 +28,15 @@ int count_live_normal_cell(int a[row][col], int r, int c){
     return count;
 }
 
-
-int count_live_vector_cell(int a[row][col], int r, int c){
+//returns the count of infected vector
+int count_infect_vector_cell(int a[row][col], int r, int c){
     int i, j, count=0;
     for(i=r-1; i<=r+1; i++){
         for(j=c-1;j<=c+1;j++){
             if((i==r && j==c) || (i<0 || j<0) || (i>=row || j>=col) || i == 0  || j == 0){
                 continue;
             }
-            if(a[i][j]==1){
+            if(a[i][j]==1){//replace with Infect char
                 count++;
             }
         }
@@ -45,14 +45,16 @@ int count_live_vector_cell(int a[row][col], int r, int c){
     return count;
 }
 
-int count_live_neighbour_cell(int a[row][col], int r, int c){
+
+//returns the count of infected neighbors
+int count_infect_neighbor_cell(int a[row][col], int r, int c){
     int i, j, count=0;
     for(i=r-1; i<=r+1; i++){
         for(j=c-1;j<=c+1;j++){
             if((i==r && j==c) || (i<0 || j<0) || (i>=row || j>=col) || (i == -1 && j == -1) || (i == 1 && j == -1) || (i == -1 && j ==1) || (i == 1 && j==1)){
                 continue;
             }
-            if(a[i][j]==1) {
+            if(a[i][j]==1) {//replace with infect char
                 printf("vectored \n");
                 count++;
             }
@@ -62,14 +64,14 @@ int count_live_neighbour_cell(int a[row][col], int r, int c){
     return count;
 }
 
-int count_infect_neighbour_cell(int a[row][col], int r, int c){
+int count_dead_total_cell(int a[row][col], int r, int c){
     int i, j, count=0;
     for(i=r-1; i<=r+1; i++){
         for(j=c-1;j<=c+1;j++){
             if((i==r && j==c) || (i<0 || j<0) || (i>=row || j>=col)){
                 continue;
             }
-            if(a[i][j]==2){
+            if(a[i][j]==0){//replace with dead char
                 count++;
             }
         }
@@ -77,20 +79,20 @@ int count_infect_neighbour_cell(int a[row][col], int r, int c){
     return count;
 }
 
-int count_recovered_neighbour_cell(int a[row][col], int r, int c){
-    int i, j, count=0;
-    for(i=r-1; i<=r+1; i++){
-        for(j=c-1;j<=c+1;j++){
-            if((i==r && j==c) || (i<0 || j<0) || (i>=row || j>=col)){
-                continue;
-            }
-            if(a[i][j]==3){
-                count++;
-            }
-        }
-    }
-    return count;
-}
+//int count_recovered_neighbour_cell(int a[row][col], int r, int c){
+//    int i, j, count=0;
+//    for(i=r-1; i<=r+1; i++){
+//        for(j=c-1;j<=c+1;j++){
+//            if((i==r && j==c) || (i<0 || j<0) || (i>=row || j>=col)){
+//                continue;
+//            }
+//            if(a[i][j]==3){
+//                count++;
+//            }
+//        }
+//    }
+//    return count;
+//}
 
 
  
@@ -100,6 +102,8 @@ int main(){
     int neighbour_live_cell;
     int neighbour_infect_cell;
     int neighbour_recovered_cell;
+    int vector_infect_cell;
+    int total_infect_cell;
       printf("0 = dead\n");
     printf("1 = alive\n");
     printf("2 = infected\n");
@@ -128,15 +132,16 @@ int main(){
     for(int gen = 1; gen<10; gen++){
     for(i=0; i<row; i++){
         for(j=0;j<col;j++){
-            neighbour_live_cell = count_live_vector_cell(a,i,j);
-            neighbour_infect_cell = count_infect_neighbour_cell(a, i, j);
+            total_infect_cell = count_infect_total_cell(a,i,j);
+            vector_infect_cell = count_infect_vector_cell(a,i,j);
+            neighbour_infect_cell = count_infect_neighbor_cell(a, i, j);
             neighbour_recovered_cell = count_recovered_neighbour_cell(a, i, j);
-            if(a[i][j]==1 && (neighbour_live_cell==2 || neighbour_live_cell==3)){
+            if(a[i][j]==1 && (total_infect_cell==2 || total_infect_cell==3)){
                 b[i][j]=1;
                 a[i][j]=b[i][j];
             }
  
-            else if(a[i][j]==0 && neighbour_live_cell==3){
+            else if(a[i][j]==0 && total_infect_cell==3){
                 b[i][j]=1;
                 a[i][j]=b[i][j];
             }
