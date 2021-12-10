@@ -1,9 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 void stateFunc(char *cell) {
-    char cellC = (char) cell;
-    if (cell != 'B') {
-        if (cellC == 'A') {
+    if (*cell != 'B') {
+        if (*cell == 'A') {
             int neighbors;
             //run function to check neighbors
 
@@ -27,7 +26,7 @@ void stateFunc(char *cell) {
                 } else if (multiplier < 1) {
                     *cell = 'C';
                 }
-            } else if (cellC == 'D') {
+            } else if (*cell == 'D') {
                 int totalNeighbors;
                 int deadNeighbors;
                 //grab number of dead and total  neighbors
@@ -35,7 +34,7 @@ void stateFunc(char *cell) {
                 if (deadNeighbors >= totalNeighbors) {
                     *cell = 'B';
                 }
-            } else if (cell == 'C') {
+            } else if (*cell == 'C') {
                 int chance = rand() % 100;
 
                 if (chance >= 50) {
@@ -43,9 +42,9 @@ void stateFunc(char *cell) {
                 } else if (chance < 50) {
                     *cell = 'D';
                 }
-            } else if (cell >= 70 || cell <= 89) {
-                if (cell > 70)
-                    *cell = cell++;
+            } else if (*cell >= 70 || *cell <= 89) {
+                if (*cell > 70)
+                    *cell = *cell++;
             } else {
                 *cell = 'A';
             }
