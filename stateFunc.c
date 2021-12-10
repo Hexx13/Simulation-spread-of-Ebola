@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include "counters.h"
 void stateFunc(char *cell) {
     if (*cell != 'B') {
         if (*cell == 'A') {
@@ -50,7 +51,7 @@ void stateFunc(char *cell) {
             }
 
         }
-	printf("wasnt B");
+       
     }
 
 
