@@ -7,7 +7,7 @@ char stateFunc(char *cell, int *rc, char array[*rc][*rc], int *r, int *c){
 	  int neighbors = count_infect_total_cell(rc, array, r, c);
             
 
-            if (neighbors < 1) {
+            if (neighbors > 1) {
                 //Generate rndom int between 0 - 1000
                 int chance = rand() % 1000;
                 if (chance < 100) {
@@ -17,11 +17,11 @@ char stateFunc(char *cell, int *rc, char array[*rc][*rc], int *r, int *c){
                 //calcualte chance from available neighbors
 	      int direct= count_infect_neighbor_cell(rc, array, r, c); 
                 int vectored= count_infect_vector_cell(rc, array, r, c);
-
+		printf("vectored, %d, direct, %d \n", vectored, direct);
 
                 int multiplier = (direct * 15) + (vectored * 8);
                 int chance = rand() % (100 - multiplier);
-                if (multiplier > 100) {
+                if (multiplier >= 100) {
                     return 'C';
 
                 } else if (chance < 1) {
