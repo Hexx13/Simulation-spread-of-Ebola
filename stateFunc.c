@@ -18,7 +18,7 @@ char stateFunc(char *cell, int *rc, char array[*rc][*rc], int *r, int *c) {
                 //calcualte chance from available neighbors
                 int direct = count_infect_neighbor_cell(rc, array, r, c);
                 int vectored = count_infect_vector_cell(rc, array, r, c);
-                printf("vectored, %d, direct, %d \n", vectored, direct);
+               
 
                 int multiplier = (direct * 15) + (vectored * 8);
 
@@ -32,8 +32,7 @@ char stateFunc(char *cell, int *rc, char array[*rc][*rc], int *r, int *c) {
                     return 'C';
                 } else return 'A';
             }
-        }
-        else if (*cell == 'D') {
+        }else if (*cell == 'D') {
             int totalNeighbors = count_cells(rc, r, c);
             int deadNeighbors = count_dead_total_cell(rc, array, r, c);
 
@@ -49,12 +48,17 @@ char stateFunc(char *cell, int *rc, char array[*rc][*rc], int *r, int *c) {
             } else if (chance < 50) {
                 return 'D';
             }
-        } else if (*cell >= 70 || *cell <= 89) {
-            if (*cell > 70)
-                return *cell + 1;
+        } else if (*cell >= 70 && *cell <= 89) {
+	  if (*cell > 70){
+	    	char newcell = *cell +1;
+		printf("%d\n",newcell );
+                return newcell;
+	  }
+
         } else {
             return 'A';
         }
-        return *cell;
+        
     }
+    return *cell;
 }

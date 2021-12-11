@@ -79,7 +79,7 @@ int count_cells(int *rc, int *r, int *c){
             }
         }
     }
-    printf("%d \n", count);
+    
     return count;
 }
 
