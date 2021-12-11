@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 
 //change row and column value to set the canvas size
@@ -7,7 +8,7 @@ int row = 10;
 int col = 10;
 int rc = 10;
 
-void stateFunc(char *cell, int *rc, char *array[*rc][*rc], int *r, int *c);
+char stateFunc(char *cell, int *rc, char array[*rc][*rc], int *r, int *c);
 
 //creates row boundary
 int row_line(){
@@ -37,14 +38,8 @@ int main(){
     for(i=0; i<row; i++){
         for(j=0;j<col;j++){
             //test code
-            int r = rand() % 100;
-            if (r > 50){
-                a[i][j] = 'C';
-            }
-            else{a[i][j]='A';}
-
-
-           // a[i][j] = 'A'; gen All healthy matrix
+            
+           a[i][j] = 'A';
 
         }
     }
@@ -64,10 +59,10 @@ int main(){
     for(int gen = 1; gen<5; gen++){
     for(i=0; i<row; i++){
         for(j=0;j<col;j++){
-	 	  stateFunc(&a[i][j], &rc,a, &i, &j);
+	 	 b[i][j]= stateFunc(&a[i][j], &rc,a, &i, &j);
         }
     }
-
+    memcpy(a,b, sizeof(a));
     //print next generation
     printf("\nNext Generation:");
      row_line(row);
