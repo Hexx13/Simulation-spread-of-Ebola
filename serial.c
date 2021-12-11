@@ -56,7 +56,7 @@ int main(){
     }
  
     //next canvas values based on live neighbour count
-    for(int gen = 1; gen<5; gen++){
+    for(int gen = 1; gen<50; gen++){
     for(i=0; i<row; i++){
         for(j=0;j<col;j++){
 	 	 b[i][j]= stateFunc(&a[i][j], &rc,a, &i, &j);

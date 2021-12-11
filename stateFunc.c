@@ -10,7 +10,7 @@ char stateFunc(char *cell, int *rc, char array[*rc][*rc], int *r, int *c){
             if (neighbors < 1) {
                 //Generate rndom int between 0 - 1000
                 int chance = rand() % 1000;
-                if (chance < 1) {
+                if (chance < 100) {
                     return  'C';
                 }
             } else if (neighbors > 0) {
