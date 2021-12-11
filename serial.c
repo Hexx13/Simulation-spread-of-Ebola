@@ -39,18 +39,6 @@ int main() {
     //next canvas values based on live neighbour count
     for (int gen = 1; gen < 5000; gen++) {
         transCell(&rc, a, b, 0,0 ,row, col);
-
-        //print next generation
-        printf("\nNext Generation:");
-        row_line(row);
-        for (i = 0; i < row; i++) {
-
-            printf(":");
-            for (j = 0; j < col; j++) {
-                printf("  %c  :", b[i][j]);
-            }
-            row_line(row);
-        }
     }
     return 0;
 }
