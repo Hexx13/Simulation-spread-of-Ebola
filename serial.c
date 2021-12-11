@@ -23,18 +23,19 @@ int main() {
     int i, j;
 
     //generate matrix canvas with random values (live and dead cells)
-    for (i = 0; i < row; i++) {
-        for (j = 0; j < col; j++) {
-            //test code
-            a[i][j] = 'A';
-
-        }
-    }
+    memcpy(a, populate(&row,&col,a), sizeof(a));
 
     //print array matrix
     printf("Initial Stage:");
     row_line();
-    memcpy(a, populate(&row,&col, a), sizeof(a));
+    for (i = 0; i < row; i++) {
+        printf(":");
+        for (j = 0; j < col; j++) {
+            printf("  %c  :", a[i][j]);
+        }
+        row_line();
+    }
+
     //next canvas values based on live neighbour count
     for (int gen = 1; gen < 5000; gen++) {
         for (i = 0; i < row; i++) {

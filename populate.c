@@ -5,10 +5,11 @@
 char *populate(int *row, int *col, char a[*row][*col]){
     int i;
     int j;
-    for (i = 0; i < row; i++) {
-        printf(":");
-        for (j = 0; j < col; j++) {
-            printf("  %c  :", a[i][j]);
+    for (i = 0; i < *row; i++) {
+        for (j = 0; j < *col; j++) {
+            //test code
+            a[i][j] = 'A';
+
         }
     }
     return a;
