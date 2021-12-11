@@ -10,7 +10,7 @@ int rc = 10;
 char *populate(int *row, int *col, char a[*row][*col]);
 void transCell(int *rc,char a[*rc][*rc], char b[*rc][*rc], int startRow, int startCol, int endRow, int endCol);
 
-int main() {
+int main(int argc, char *argv[]) {
     char a[rc][rc], b[row][col];
 
     //generate matrix canvas with random values (live and dead cells)
