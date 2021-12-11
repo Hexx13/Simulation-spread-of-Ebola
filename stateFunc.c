@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "counters.h"
-void *stateFunc(char *cell, int *rc, char *array[*rc][*rc], int *r, int *c){
+void stateFunc(char *cell, int *rc, char *array[*rc][*rc], int *r, int *c){
     if (*cell != 'B') {
         if (*cell == 'A') {
 	  int neighbors = count_infect_total_cell(rc, array, r, c);
