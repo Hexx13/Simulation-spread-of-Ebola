@@ -21,13 +21,6 @@ int row_line(){
 int main(){
        char a[rc][rc], b[row][col];
     int i,j;
-    int neighbour_live_cell;
-    int neighbour_infect_cell;
-    int neighbour_recovered_cell;
-    int vector_infect_cell;
-    int total_infect_cell;
-    int total_dead_cell;
-    int total_cell;
       printf("D = dead\n");
     printf("A = alive\n");
     printf("C = infected\n");
