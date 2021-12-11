@@ -1,14 +1,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "counters.h"
-void stateFunc(char *cell, int *rc, char *array[*rc][*rc], int *r, int *c){
+void *stateFunc(char *cell, int *rc, char *array[*rc][*rc], int *r, int *c){
     if (*cell != 'B') {
         if (*cell == 'A') {
 	  int neighbors = count_infect_total_cell(rc, array, r, c);
             
 
             if (neighbors < 1) {
-                //Generate raxndom int between 0 - 1000
+                //Generate rndom int between 0 - 1000
                 int chance = rand() % 1000;
                 if (chance < 1) {
                     *cell =  'C';

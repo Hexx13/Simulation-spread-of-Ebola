@@ -64,7 +64,7 @@ int main(){
     for(int gen = 1; gen<5; gen++){
     for(i=0; i<row; i++){
         for(j=0;j<col;j++){
-	 	  stateFunc(&a[i][j], &rc,&a, &i, &j);
+	 	  stateFunc(&a[i][j], &rc,a, &i, &j);
         }
     }
 
