@@ -59,7 +59,7 @@ int count_dead_total_cell(int *rc  ,char a[*rc][*rc], int *r, int *c){
             if((i==*r && j==*c) || (i<0 || j<0) || (i>=*rc || j>=*rc)){
                 continue;
             }
-            if(a[i][j]=='D'){
+            if(a[i][j]=='D'|| a[i][j]=='B'){
                 count++;
             }
         }
@@ -79,7 +79,7 @@ int count_cells(int *rc, int *r, int *c){
             }
         }
     }
-    
+
     return count;
 }
 

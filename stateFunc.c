@@ -48,7 +48,7 @@ char stateFunc(char *cell, int *rc, char array[*rc][*rc], int *r, int *c) {
             } else if (chance < 50) {
                 return 'D';
             }
-        } else if (*cell >= 70 && *cell <= 89) {
+        } else if (*cell >= 70 && *cell < 89) {
 	  if (*cell > 70){
 	    	char newcell = *cell +1;
 		printf("%d\n",newcell );
