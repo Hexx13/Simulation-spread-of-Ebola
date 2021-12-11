@@ -7,7 +7,7 @@ int row = 10;
 int col = 10;
 int rc = 10;
 
-void stateFunc(char *cell, int *rc, char *(*)array[*rc][*rc], int *r, int *c);
+void stateFunc(char *cell, int *rc, char *array[*rc][*rc], int *r, int *c);
 
 //creates row boundary
 int row_line(){
