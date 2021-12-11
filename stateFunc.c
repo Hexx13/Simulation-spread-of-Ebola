@@ -27,6 +27,7 @@ char stateFunc(char *cell, int *rc, char array[*rc][*rc], int *r, int *c){
                 } else if (chance < 1) {
                     return 'C';
                 }
+		else return 'A';
             } else if (*cell == 'D') {
 	      int totalNeighbors = count_cells(rc, r, c);
               int deadNeighbors= count_dead_total_cell(rc, array, r, c);
@@ -45,7 +46,7 @@ char stateFunc(char *cell, int *rc, char array[*rc][*rc], int *r, int *c){
                 }
             } else if (*cell >= 70 || *cell <= 89) {
                 if (*cell > 70)
-                    *cell = *cell+ 1;
+                    return *cell +1;
             } else {
                 return 'A';
             }
