@@ -23,7 +23,7 @@ int main() {
     int i, j;
 
     //generate matrix canvas with random values (live and dead cells)
-    memcpy(a, populate(&row,&col,a), sizeof(a));
+    populate(&row,&col,a);
 
     //print array matrix
     printf("Initial Stage:");
