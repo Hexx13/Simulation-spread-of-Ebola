@@ -1,22 +1,22 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "counters.h"
-void stateFunc(char *cell) {
+void stateFunc(char *cell, int *rc, char *array[*rc][*rc], int *r, int *c){
     if (*cell != 'B') {
         if (*cell == 'A') {
-            int neighbors;
-            //run function to check neighbors
+	  int neighbors = count_infect_total_cell(rc, array, r, c);
+            
 
             if (neighbors < 1) {
-                //Generate random int between 0 - 1000
+                //Generate raxndom int between 0 - 1000
                 int chance = rand() % 1000;
                 if (chance < 1) {
                     *cell =  'C';
                 }
             } else if (neighbors > 0) {
                 //calcualte chance from available neighbors
-                int direct; //pull from function
-                int vector;
+	      int direct= count_infect_neighbor_cell(rc, array, r, c); 
+                int vector= count_infect_vector_cell(rc, array, r, c);
 
 
                 int multiplier = (direct * 15) + (vector * 8);
@@ -28,9 +28,9 @@ void stateFunc(char *cell) {
                     *cell = 'C';
                 }
             } else if (*cell == 'D') {
-                int totalNeighbors;
-                int deadNeighbors;
-                //grab number of dead and total  neighbors
+	      int totalNeighbors = count_cells(rc, r, c);
+              int deadNeighbors= count_dead_total_cell(rc, array, r, c);
+                
 
                 if (deadNeighbors >= totalNeighbors) {
                     *cell = 'B';
@@ -49,10 +49,6 @@ void stateFunc(char *cell) {
             } else {
                 *cell = 'A';
             }
-
         }
-       
     }
-
-
 }
