@@ -7,7 +7,7 @@ char stateFunc(char *cell, int *rc, char array[*rc][*rc], int *r, int *c){
 	  int neighbors = count_infect_total_cell(rc, array, r, c);
             
 
-            if (neighbors > 1) {
+            if (neighbors < 1) {
                 //Generate rndom int between 0 - 1000
                 int chance = rand() % 1000;
                 if (chance < 100) {
