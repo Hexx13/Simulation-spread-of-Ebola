@@ -9,5 +9,5 @@ void transCell(int *rc,char a[*rc][*rc], char b[*rc][*rc], int startRow, int sta
             b[i][j] = stateFunc(&a[i][j], rc, a, &i, &j);
         }
     }
-    memcpy(a, b, sizeof(a));
+    memcpy(a, b, sizeof(*a));
 }
