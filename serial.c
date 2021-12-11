@@ -8,7 +8,7 @@ int row = 10;
 int col = 10;
 int rc = 10;
 char *populate(int *row, int *col, char a[*row][*col]);
-char stateFunc(char *cell, int *rc, char array[*rc][*rc], int *r, int *c);
+void transCell(int *rc,char a[*rc][*rc], char b[*rc][*rc], int *startRow, int *startCol, int *endRow, int *endCol);
 
 //creates row boundary
 int row_line() {
@@ -38,13 +38,7 @@ int main() {
 
     //next canvas values based on live neighbour count
     for (int gen = 1; gen < 5000; gen++) {
-        for (i = 0; i < row; i++) {
-            for (j = 0; j < col; j++) {
-                b[i][j] = stateFunc(&a[i][j], &rc, a, &i, &j);
-            }
-        }
-        memcpy(a, b, sizeof(a));
-
+        transCell(&rc, a, b, 0,0 ,row, col);
 
         //print next generation
         printf("\nNext Generation:");
