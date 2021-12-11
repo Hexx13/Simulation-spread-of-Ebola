@@ -7,7 +7,7 @@
 int row = 10;
 int col = 10;
 int rc = 10;
-
+char *populate(int *row, int *col, char a[*row][*col]);
 char stateFunc(char *cell, int *rc, char array[*rc][*rc], int *r, int *c);
 
 //creates row boundary
@@ -34,14 +34,7 @@ int main() {
     //print array matrix
     printf("Initial Stage:");
     row_line();
-    for (i = 0; i < row; i++) {
-        printf(":");
-        for (j = 0; j < col; j++) {
-            printf("  %c  :", a[i][j]);
-        }
-        row_line();
-    }
-
+    memcpy(a, populate(&row,&col, a), sizeof(a));
     //next canvas values based on live neighbour count
     for (int gen = 1; gen < 5000; gen++) {
         for (i = 0; i < row; i++) {
