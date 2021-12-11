@@ -51,5 +51,6 @@ char stateFunc(char *cell, int *rc, char array[*rc][*rc], int *r, int *c){
                 return 'A';
             }
         }
+	return *cell;
     }
 }
