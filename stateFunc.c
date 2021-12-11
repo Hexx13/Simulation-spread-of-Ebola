@@ -1,59 +1,60 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "counters.h"
-char stateFunc(char *cell, int *rc, char array[*rc][*rc], int *r, int *c){
+
+char stateFunc(char *cell, int *rc, char array[*rc][*rc], int *r, int *c) {
     if (*cell != 'B') {
         if (*cell == 'A') {
-	  int neighbors = count_infect_total_cell(rc, array, r, c);
-            
+            int neighbors = count_infect_total_cell(rc, array, r, c);
+
 
             if (neighbors < 1) {
                 //Generate rndom int between 0 - 1000
                 int chance = rand() % 1000;
                 if (chance < 100) {
-                    return  'C';
+                    return 'C';
                 }
             } else if (neighbors > 0) {
                 //calcualte chance from available neighbors
-	      int direct= count_infect_neighbor_cell(rc, array, r, c); 
-                int vectored= count_infect_vector_cell(rc, array, r, c);
-		printf("vectored, %d, direct, %d \n", vectored, direct);
+                int direct = count_infect_neighbor_cell(rc, array, r, c);
+                int vectored = count_infect_vector_cell(rc, array, r, c);
+                printf("vectored, %d, direct, %d \n", vectored, direct);
 
                 int multiplier = (direct * 15) + (vectored * 8);
-               
+
                 if (multiplier >= 100) {
                     return 'C';
 
                 }
-	        int chance = rand() % (100 - multiplier);
+                int chance = rand() % (100 - multiplier);
 
-		if (chance < 1) {
+                if (chance < 1) {
                     return 'C';
-                }
-		else return 'A';
-            } else if (*cell == 'D') {
-	      int totalNeighbors = count_cells(rc, r, c);
-              int deadNeighbors= count_dead_total_cell(rc, array, r, c);
-                
-
-                if (deadNeighbors >= totalNeighbors) {
-		  return 'B';
-                }
-            } else if (*cell == 'C') {
-                int chance = rand() % 100;
-
-                if (chance >= 50) {
-                    return 'Y';
-                } else if (chance < 50) {
-                    return 'D';
-                }
-            } else if (*cell >= 70 || *cell <= 89) {
-                if (*cell > 70)
-                    return *cell +1;
-            } else {
-                return 'A';
+                } else return 'A';
             }
         }
-	return *cell;
+        else if (*cell == 'D') {
+            int totalNeighbors = count_cells(rc, r, c);
+            int deadNeighbors = count_dead_total_cell(rc, array, r, c);
+
+
+            if (deadNeighbors >= totalNeighbors) {
+                return 'B';
+            }
+        } else if (*cell == 'C') {
+            int chance = rand() % 100;
+
+            if (chance >= 50) {
+                return 'Y';
+            } else if (chance < 50) {
+                return 'D';
+            }
+        } else if (*cell >= 70 || *cell <= 89) {
+            if (*cell > 70)
+                return *cell + 1;
+        } else {
+            return 'A';
+        }
+        return *cell;
     }
 }
