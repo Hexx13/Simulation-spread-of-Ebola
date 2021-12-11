@@ -8,7 +8,7 @@ int row = 10;
 int col = 10;
 int rc = 10;
 char *populate(int *row, int *col, char a[*row][*col]);
-void transCell(int *rc,char a[*rc][*rc], char b[*rc][*rc], int *startRow, int *startCol, int *endRow, int *endCol);
+void transCell(int *rc,char a[*rc][*rc], char b[*rc][*rc], int startRow, int startCol, int endRow, int endCol);
 
 //creates row boundary
 int row_line() {
