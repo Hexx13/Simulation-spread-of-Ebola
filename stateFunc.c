@@ -20,11 +20,11 @@ char stateFunc(char *cell, int *rc, char array[*rc][*rc], int *r, int *c){
 
 
                 int multiplier = (direct * 15) + (vectored * 8);
-                int chance = rand() % (100 - chance);
+                int chance = rand() % (100 - multiplier);
                 if (multiplier > 100) {
                     return 'C';
 
-                } else if (multiplier < 1) {
+                } else if (chance < 1) {
                     return 'C';
                 }
             } else if (*cell == 'D') {
@@ -45,7 +45,7 @@ char stateFunc(char *cell, int *rc, char array[*rc][*rc], int *r, int *c){
                 }
             } else if (*cell >= 70 || *cell <= 89) {
                 if (*cell > 70)
-                    *cell = *cell++;
+                    *cell = *cell+ 1;
             } else {
                 return 'A';
             }
