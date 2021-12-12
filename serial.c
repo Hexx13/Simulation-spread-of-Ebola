@@ -8,7 +8,6 @@ int row;
 int col;
 int rc;
 int time;
-void IOWrite(int rc, char a[rc][rc]);
 char *populate(int *row, int *col, char a[*row][*col]);
 void transCell(int *rc,char a[*rc][*rc], char b[*rc][*rc], int startRow, int startCol, int endRow, int endCol);
 
@@ -17,7 +16,6 @@ int main(int argc, char *argv[]) {
     row = atoi(argv[2]);
     col = atoi(argv[2]);
     rc = atoi(argv[2]);
-
     char a[rc][rc], b[row][col];
 
     //populate cell dimension
@@ -25,13 +23,12 @@ int main(int argc, char *argv[]) {
 
 
     //Iterate time
-    for (int gen = 1; gen <= time; gen++) {
+    for (int gen = 1; gen < time; gen++) {
         //iterate through cells and assign to future array
         transCell(&rc, a, b, 0,0 ,row, col);
-        printf("%d\n",gen);
 
         //dump here
-        IOWrite(rc,a);
+
         //assign present array as future array
         memcpy(a, b, sizeof(*a));
     }

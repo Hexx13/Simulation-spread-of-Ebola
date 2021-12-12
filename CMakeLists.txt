@@ -6,5 +6,5 @@ set(CMAKE_C_STANDARD 11)
 add_executable(Simulation_spread_of_Ebola
         stateFunc.c
         serial.c cmake-build-debug
-        IO.c
+        Io.c
         )
