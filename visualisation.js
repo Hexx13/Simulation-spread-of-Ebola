@@ -34,32 +34,37 @@ var recoveredCount= 0;
 //takes in the values of text.txt and splits them into differect generations using the '.' as an indicator, they are then saved to the generations array
 function load_file()
 {
+
     var lineReader = require('line-reader');
 
     lineReader.eachLine('text.txt', function(line, last) {
 
         let generations = line.split(".");
-        for (i = 0; i< generations.length;i++) {
-            for (j = 0; j < generations[j].length; j++) {
-                var line =generations[j];
-                //loops through each gen, then each letter in each gen. For now it prints it to the console
-                for (var i = 0; i< generations.length;i++) {
-                    for (var j = 0; j < generations[j].length; j++) {
-                        var line =generations[j];
 
-                        console.log(line.charAt(j));
+        for (var i = 0; i< generations.length;i++) {
+            var rowcol = Math.sqrt(generations[i].length);
+            console.log(generations[i].length);
+            console.log(rowcol);
+            for (var j = 0; j < generations[j].length; j++) {
+
+                for(var k = 0; k < rowcol ; k++){
+                    for (var l = 0; l < rowcol ; l++){
 
                     }
                 }
+                var line =generations[j];
+
+                // console.log(line.charAt(j));
+
             }
         }
+        // console.log(generations[1]);
+        // console.log(generations[2]);
+        // console.log(generations[3]);
+        //console.log(generations[4]);
+        // console.log(generations[8]);
 
-        console.log(generations[1]);
-        console.log(generations[2]);
-        console.log(generations[3]);
-        console.log(generations[4]);
-        console.log(generations[8]);
-
+   
     });
 
 
