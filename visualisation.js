@@ -30,54 +30,44 @@ let infectCount= 0;
 let deadCount= 0;
 let recoveredCount= 0;
 
+let generations;
+let gridArray;
+let lineReader = require('line-reader');
+
 // read in the file
 //takes in the values of text.txt and splits them into differect generations using the '.' as an indicator, they are then saved to the generations array
 function load_file()
 {
 
-    let lineReader = require('line-reader');
 
     lineReader.eachLine('text.txt', function(line, last) {
-
-       let generations = line.split(".");
-
-       let realGridArray;
-        for (let i = 0; i< generations.length;i++) {
-
-            let rowcol = Math.sqrt(generations[i].length);
-            console.log(generations[i].length);
-            console.log(rowcol);
-
-
-            for (let j = 0; j < generations[j].length; j++) {
-
-                let line =generations[j];
-                // console.log(line.charAt(j));
-            }
-            let gridArray;
-
-            for(let j = 0; j < rowcol; j++ ){
-
-                for(let i = 0; i < rowcol; i++ ){
-                gridArray[j][i] = generations[i].charAt(i);
-
-                }
-            }
-        }
-
-        t.grid = t.makeGrid(gridArray);
-
-
-
-        // console.log(generations[1]);
-        // console.log(generations[2]);
-        // console.log(generations[3]);
-        //console.log(generations[4]);
-        // console.log(generations[8]);
-
-
+       generations = line.split(".");
     });
 
+    for (let i = 0; i< generations.length;i++) {
+
+        let rowcol = Math.sqrt(generations[i].length);
+        console.log(generations[i].length);
+        console.log(rowcol);
+
+
+        for (let j = 0; j < generations[j].length; j++) {
+
+            let line =generations[j];
+            // console.log(line.charAt(j));
+        }
+
+
+        for(let j = 0; j < rowcol; j++ ){
+
+            for(let i = 0; i < rowcol; i++ ){
+                gridArray[j][i] = generations[i].charAt(i);
+
+            }
+        }
+    }
+
+    t.grid = t.makeGrid(gridArray);
 
 }
 
