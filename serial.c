@@ -25,7 +25,7 @@ int main(int argc, char *argv[]) {
     IOWrite(size, a);
 
     // iterate through cells and assign to future array
-    transCell(&size, a, b, 0, 0, size, size);
+    transCell(size, a, b, 0, 0, size, size);
     printf("%d\n", gen);
 
 
