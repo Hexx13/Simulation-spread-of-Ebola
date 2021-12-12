@@ -42,19 +42,13 @@ char stateFunc(char *cell, int *rc, char array[*rc][*rc], int *r, int *c) {
                 return 'B';
             }
         } else if (*cell == 'C') {
+            //If cell is infected run chance to recover or die
             int chance = rand() % 100;
-<<<<<<< HEAD
             //make cell recover
             if (chance >= 50) {
                 return 'Y';
             } // make cell die
             else if (chance < 50) {
-=======
-
-            if (chance >= 50) {
-                return 'Y';
-            } else if (chance < 50) {
->>>>>>> f365c84e304a4b599d0396d08f54405053c21fb5
                 return 'D';
             }
         } else if (*cell > 70 && *cell <= 89) {
