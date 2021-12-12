@@ -39,6 +39,21 @@ function load_file()
     lineReader.eachLine('text.txt', function(line, last) {
 
         let generations = line.split(".");
+        for (i = 0; i< generations.length;i++) {
+            for (j = 0; j < generations[j].length; j++) {
+                var line =generations[j];
+                //loops through each gen, then each letter in each gen. For now it prints it to the console
+                for (var i = 0; i< generations.length;i++) {
+                    for (var j = 0; j < generations[j].length; j++) {
+                        var line =generations[j];
+
+                        console.log(line.charAt(j));
+
+                    }
+                }
+            }
+        }
+
         console.log(generations[1]);
         console.log(generations[2]);
         console.log(generations[3]);
