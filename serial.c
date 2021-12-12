@@ -3,10 +3,10 @@
 #include <string.h>
 
 
-//change row and column value to set the canvas size
-int row;
-int col;
-int rc;
+//change size and column value to set the canvas size
+int size;
+int size;
+int size;
 int time;
 void IOWrite(int rc, char a[rc][rc]);
 char *populate(int *row, int *col, char a[*row][*col]);
@@ -14,24 +14,23 @@ void transCell(int *rc,char a[*rc][*rc], char b[*rc][*rc], int startRow, int sta
 
 int main(int argc, char *argv[]) {
     time = atoi(argv[1]);
-    row = atoi(argv[2]);
-    col = atoi(argv[2]);
-    rc = atoi(argv[2]);
+    size = atoi(argv[2]);
+    
 
-    char a[rc][rc], b[row][col];
+    char a[size][size], b[size][size];
 
     //populate cell dimension
-    populate(&row,&col,a);
+    populate(&size, &size, a);
 
 
     //Iterate time
     for (int gen = 1; gen <= time; gen++) {
         //iterate through cells and assign to future array
-        transCell(&rc, a, b, 0,0 ,row, col);
+        transCell(&size, a, b, 0, 0 , size, size);
         printf("%d\n",gen);
 
         //dump here
-        IOWrite(rc,a);
+        IOWrite(size, a);
         //assign present array as future array
         memcpy(a, b, sizeof(*a));
     }
