@@ -11,7 +11,7 @@ char *populate(int *row, int *col, char a[*row][*col]);
 void transCell(int rc, char a[rc][rc], char b[rc][rc], int startRow,
                int startCol, int endRow, int endCol);
 
-<<<<<<< HEAD:parrallel/parallel.c
+
 struct ThreadWork{
   int start;
   int end;
@@ -24,8 +24,6 @@ struct ThreadWork{
 
 
 
-=======
->>>>>>> 11cdb3d1806206c666a9e7a35e85b0ff9b622bb4:parallel.c
 int main(int argc, char *argv[]) {
   iteration = atoi(argv[1]);
   size = atoi(argv[2]);
