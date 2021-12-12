@@ -37,7 +37,7 @@ int main(int argc, char *argv[]) {
     }*/
 
     // assign present array as future array
-    memcpy(a, b, sizeof(*a));
+    memcpy(a, b, sizeof(a));
 
   }
   return 0;
