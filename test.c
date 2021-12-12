@@ -16,7 +16,7 @@ int main(){
         }
     }
 
-    //printf("%d \n", count_cells(&rc, &r, &c));
+    printf("%d \n", count_cells(&rc, &r, &c));
     
     //l
   return 0;
