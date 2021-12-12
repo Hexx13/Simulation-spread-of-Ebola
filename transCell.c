@@ -11,5 +11,4 @@ void transCell(int *rc,char a[*rc][*rc], char b[*rc][*rc], int startRow, int sta
             printf("%c \n", b[i][j]);
         }
     }
-
 }
