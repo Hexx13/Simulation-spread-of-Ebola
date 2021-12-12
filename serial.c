@@ -23,12 +23,13 @@ int main(int argc, char *argv[]) {
 
   // Iterate time
   for (int gen = 1; gen <= time; gen++) {
+    // write current generation
+    IOWrite(size, a);
     // iterate through cells and assign to future array
     transCell(&size, a, b, 0, 0, size, size);
     printf("%d\n", gen);
 
-    // dump here
-    IOWrite(size, a);
+
     // assign present array as future array
     memcpy(a, b, sizeof(*a));
   }
