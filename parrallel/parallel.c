@@ -25,8 +25,16 @@ struct ThreadWork{
 
 
 int main(int argc, char *argv[]) {
+
+  long thread;  /* Use long in case of a 64-bit system */
+  pthread_t* thread_handles;
+  thread_handles = (pthread_t*) malloc (thread_count*sizeof(pthread_t));
+
+
+
   iteration = atoi(argv[1]);
   size = atoi(argv[2]);
+  thread = atoi(argv[3]);
 
   char a[size][size], b[size][size];
 
