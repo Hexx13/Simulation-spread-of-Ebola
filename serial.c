@@ -7,7 +7,7 @@ int size;
 int time;
 void IOWrite(int rc, char a[rc][rc]);
 char *populate(int *row, int *col, char a[*row][*col]);
-void transCell(int *rc, char a[*rc][*rc], char b[*rc][*rc], int startRow,
+void transCell(int rc, char a[rc][rc], char b[rc][rc], int startRow,
                int startCol, int endRow, int endCol);
 
 int main(int argc, char *argv[]) {
