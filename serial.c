@@ -27,7 +27,14 @@ int main(int argc, char *argv[]) {
     // iterate through cells and assign to future array
     transCell(size, a, b, 0, 0, size, size);
     printf("%d\n", gen);
-
+  int i , j;
+    /*for (i = 0; i < size; i++) {
+      for (j = 0; j < size; j++) {
+        //printf("nooooo row: %d, col: %d", i, j);
+        a[i][j] = b[i][j];
+        //printf("%c \n", a[i][j]);
+      }
+    }*/
 
     // assign present array as future array
     memcpy(a, b, sizeof(*a));
