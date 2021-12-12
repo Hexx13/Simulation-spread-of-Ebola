@@ -1,49 +1,45 @@
-#include <pthread.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <pthread.h>
 
+// change size and column value to set the canvas size
+int size;
+int iteration;
+void IOWrite(int rc, char a[rc][rc]);
 char *populate(int *row, int *col, char a[*row][*col]);
-void transCell(int *rc, char a[*rc][*rc], char b[*rc][*rc], int startRow,
+void transCell(int rc, char a[rc][rc], char b[rc][rc], int startRow,
                int startCol, int endRow, int endCol);
 
-long thread_count;
-
 int main(int argc, char *argv[]) {
-  time = atoi(argv[1]);
-  row = atoi(argv[2]);
-  col = atoi(argv[2]);
-  rc = atoi(argv[2]);
-  thread_count = atoi(argv[3]);
-  char a[rc][rc], b[row][col];
+  iteration = atoi(argv[1]);
+  size = atoi(argv[2]);
+
+  char a[size][size], b[size][size];
 
   // populate cell dimension
-  populate(&row, &col, a);
+  populate(&size, &size, a);
 
-  long thread;
-  pthread_t *thread_handles;
+  // Iterate time
+  for (int gen = 1; gen <= iteration; gen++) {
+    // write current generation
+    IOWrite(size, a);
 
-  thread_handles = (pthread_t *)malloc(thread_count * sizeof(pthread_t));
+    // iterate through cells and assign to future array
+    transCell(size, a, b, 0, 0, size, size);
+    printf("%d\n", gen);
+    int i , j;
+    /*for (i = 0; i < size; i++) {
+      for (j = 0; j < size; j++) {
+        //printf("nooooo row: %d, col: %d", i, j);
+        a[i][j] = b[i][j];
+        //printf("%c \n", a[i][j]);
+      }
+    }*/
 
-  for (thread = 0; thread < thread_count; thread++)
-        pthread_create(&thread_handles[thread], NULL,
-                       populate, /* PARAMETER(ONLY ONE WE NEED LIKE 900 PARAMETERS) */;
+    // assign present array as future array
+    memcpy(a, b, sizeof(a));
 
-    for (thread = 0; thread < thread_count; thread++)
-        pthread_join(thread_handles[thread], NULL, /*FUNCTION*/, /* PARAMETER (ONLY ONE PARAMETER WE NEED LIKE 900 PARAMETERS)*/);
-
-    //Iterate time
-    for (int gen = 1; gen < time; gen++) {
-      // iterate through cells and assign to future array
-      transCell(&rc, a, b, 0, 0, row, col);
-
-      // dump here
-
-      // assign present array as future array
-      memcpy(a, b, sizeof(*a));
-    }
-    return 0;
-}
-
-return 0;
+  }
+  return 0;
 }
