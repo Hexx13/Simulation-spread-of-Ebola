@@ -6,7 +6,9 @@ void transCell(int *rc,char a[*rc][*rc], char b[*rc][*rc], int startRow, int sta
     int i, j;
     for (i = startRow; i < endRow; i++) {
         for (j = startCol; j < endCol; j++) {
+            printf("row: %d, col: %d", i , j);
             b[i][j] = stateFunc(&a[i][j], rc, a, &i, &j);
+            printf("%c \n", b[i][j]);
         }
     }
 
