@@ -10,7 +10,7 @@ char stateFunc(char *cell, int rc, char array[rc][rc], int *r, int *c) {
       if (neighbors < 1) {
         // Generate rndom int between 0 - 1000
         int chance = rand() % 1000;
-        if (chance < 100) {
+        if (chance < 1) {
           return 'C';
         }
       } else if (neighbors > 0) {
@@ -39,17 +39,17 @@ char stateFunc(char *cell, int rc, char array[rc][rc], int *r, int *c) {
       }
     } else if (*cell == 'C') {
       // If cell is infected run chance to recover or die
-      int chance = rand() % 100;
+      int chance = rand() % 500;
       // make cell recover
-      if (chance >= 99) {
+      if (chance >= 499) {
         return 'Y';
       } // make cell die
       else if (chance < 1) {
         return 'D';
       }
-    } else if (*cell >= 70 && *cell < 89) {
+    } else if (*cell > 70 && *cell <= 89) {
       if (*cell > 70) {
-        char newcell = *cell + 1;
+        char newcell = *cell - 1;
         printf("%d\n", newcell);
         return newcell;
       }
