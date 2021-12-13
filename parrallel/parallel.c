@@ -19,6 +19,7 @@ struct ThreadWork{
   int row;
   int size;
   char *a;
+
 };
 
 
