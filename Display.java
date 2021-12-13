@@ -16,7 +16,12 @@ public class Display extends JFrame {
 
         //declares the number of rows by dividing the generations by the square root
         int rows = retRows();
-
+        //returns the number of healthy people per iteration
+        //TODO Val please run the c program and use the text file with this file , count will print the number of healthy ect to be used in gnuplot.(you have to install that on linux ill send you the syntax for it)
+        healthyCount(newArray);
+        // infectedCount(newArray);
+        // deceasedCount(newArray);
+        // recoveredCount(newArray);
         //declaring items for the GUI
         Container contentPane = getContentPane();
         contentPane.setLayout(new GridLayout(rows+1, rows));
@@ -30,6 +35,7 @@ public class Display extends JFrame {
                 //creates panel and adds border
                 panelarray[j] = new JPanel();
                 panelarray[j].setBorder(blackline);
+
                 //if statement to determine the color of the panel of each index in the array for that generation
                 if(retsus()[i][j] == 'A'){
                     panelarray[j].setBackground(Color.white);
@@ -54,7 +60,7 @@ public class Display extends JFrame {
             //+1 is added so it matches the generation count
             genLab.setText("This is Generation "+(i+1));
             //allows the user to process a generation before it is overwritten
-            Thread.sleep(10);
+            Thread.sleep(1000);
             //removes all content from contentpane
             contentPane.removeAll();
         }
@@ -121,6 +127,7 @@ public class Display extends JFrame {
                 characterArray[i][j] = generations[i].charAt(j);
                 if(generations[i].charAt(j) == 'A'){
                     susCount = susCount+1;
+
                 }//sus count
                 else if(generations[i].charAt(j) == 'B' ||generations[i].charAt(j) == 'D'){
                     deceasedCount=deceasedCount+1;
@@ -147,6 +154,101 @@ public class Display extends JFrame {
             }}
 
         return characterArray;
+    }
+
+    public int[] healthyCount(char[][] newArray){
+        //declaration of all counter arrays
+        int susArray[]= new int[newArray.length];
+
+        //declaration of all counters
+        int susCount=0;
+
+        for (int i =0; i<newArray.length; i++){
+            for(int j = 0; j<newArray[i].length;j++) {
+                if(newArray[i][j] == 'A'){
+                    susCount = susCount+1;
+
+                }//sus count
+            }
+            susArray[i]=susCount;
+            System.out.println(susCount);
+            susCount=0;
+
+        }
+        return susArray;
+    }
+
+    public int[] infectedCount(char[][] newArray){
+        //declaration of all counter arrays
+        int infectArray[]= new int[newArray.length];
+        //declaration of all counters
+        int infectCount=0;
+
+        for (int i =0; i<newArray.length; i++){
+            for(int j = 0; j<newArray[i].length;j++) {
+                if(newArray[i][j] == 'C'){
+                    infectCount=infectCount+1;
+                }//infect count
+            }
+            infectArray[i]=infectCount;
+            System.out.println(infectCount);
+            infectCount=0;
+
+
+        }
+        return infectArray;
+    }
+
+    public int[] deceasedCount(char[][] newArray){
+        //declaration of all counter arrays
+        int deceasedArray[]= new int[newArray.length];
+
+        //declaration of all counters
+        int deceasedCount=0;
+
+        for (int i =0; i<newArray.length; i++){
+            for(int j = 0; j<newArray[i].length;j++) {
+                if(newArray[i][j] == 'B' ||newArray[i][j] == 'D'){
+                    deceasedCount=deceasedCount+1;
+                }//dead count
+
+            }
+
+            deceasedArray[i]=deceasedCount;
+            System.out.println(deceasedCount);
+            deceasedCount=0;
+
+
+
+        }
+        return deceasedArray;
+    }
+
+    public int[] recoveredCount(char[][] newArray){
+        //declaration of all counter arrays
+
+        int recoveredArray[]= new int[newArray.length];
+        //declaration of all counters
+
+        int recoveredCount=0;
+
+        for (int i =0; i<newArray.length; i++){
+            for(int j = 0; j<newArray[i].length;j++) {
+
+                if(newArray[i][j] != 'B' &&newArray[i][j] != 'D'&& newArray[i][j] != 'A'&& newArray[i][j] != 'C'){
+
+                    recoveredCount=recoveredCount+1;
+
+                }//immune count
+
+            }
+
+            recoveredArray[i]=recoveredCount;
+            System.out.println(recoveredCount);
+            recoveredCount=0;
+
+        }
+        return recoveredArray;
     }
 
 }
