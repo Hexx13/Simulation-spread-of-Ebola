@@ -1,101 +1,139 @@
-#include <pthread.h>
-#include <stdlib.h>
+/* File:     pth_pi.c
+* Purpose:  Try to estimate pi using the formula
+*
+*              pi = 4*[1 - 1/3 + 1/5 - 1/7 + 1/9 - . . . ]
+*
+*           This version has a *very serious bug*
+*
+* Compile:  gcc -g -Wall -o pth_pi pth_pi.c -lm -lpthread
+* Run:      ./pth_pi <number of threads> <n>
+*           n is the number of terms of the series to use.
+*           n should be evenly divisible by the number of threads
+* Input:    none
+* Output:   Estimate of pi as computed by multiple threads, estimate
+*           as computed by one thread, and 4*arctan(1).
+*
+* Notes:
+*    1.  The radius of convergence for the series is only 1.  So the
+*        series converges quite slowly.
+*
+* IPP:   Section 4.4 (pp. 162 and ff.)
+*/
+
 #include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
+#include <pthread.h>
 
-#define SIZE 10   // Size by SIZE matrices
-int num_thrd;   // number of threads
+const int MAX_THREADS = 1024;
 
-int A[SIZE][SIZE], B[SIZE][SIZE], C[SIZE][SIZE];
+long thread_count;
+long long n;
+double sum;
 
-// initialize a matrix
-void init_matrix(int m[SIZE][SIZE])
-{
-  int i, j, val = 0;
-  for (i = 0; i < SIZE; i++)
-    for (j = 0; j < SIZE; j++)
-      m[i][j] = val++;
-}
+void* Thread_sum(void* rank);
 
-void print_matrix(int m[SIZE][SIZE])
-{
-  int i, j;
-  for (i = 0; i < SIZE; i++) {
-    printf("\n\t| ");
-    for (j = 0; j < SIZE; j++)
-      printf("%2d ", m[i][j]);
-    printf("|");
-  }
-}
+/* Only executed by main thread */
+void Get_args(int argc, char* argv[]);
+void Usage(char* prog_name);
+double Serial_pi(long long n);
 
-// thread function: taking "slice" as its argument
-void* multiply(void* slice)
-{
-  int s = (int)slice;   // retrive the slice info
-  int from = (s * SIZE)/num_thrd; // note that this 'slicing' works fine
-  int to = ((s+1) * SIZE)/num_thrd; // even if SIZE is not divisible by num_thrd
-  int i,j,k;
+int main(int argc, char* argv[]) {
+ long       thread;  /* Use long in case of a 64-bit system */
+ pthread_t* thread_handles;
 
-  printf("computing slice %d (from row %d to %d)\n", s, from, to-1);
-  for (i = from; i < to; i++)
-  {
-    for (j = 0; j < SIZE; j++)
-    {
-      C[i][j] = 0;
-      for ( k = 0; k < SIZE; k++)
-        C[i][j] += A[i][k]*B[k][j];
-    }
-  }
-  printf("finished slice %d\n", s);
-  return 0;
-}
+ /* Get number of threads from command line */
+ Get_args(argc, argv);
 
-int main(int argc, char* argv[])
-{
-  pthread_t* thread;  // pointer to a group of threads
-  int i;
+ thread_handles = (pthread_t*) malloc (thread_count*sizeof(pthread_t));
+ sum = 0.0;
 
-  if (argc!=2)
-  {
-    printf("Usage: %s number_of_threads\n",argv[0]);
-    exit(-1);
-  }
+ for (thread = 0; thread < thread_count; thread++)
+   pthread_create(&thread_handles[thread], NULL,
+                  Thread_sum, (void*)thread);
 
-  num_thrd = atoi(argv[1]);
-  init_matrix(A);
-  init_matrix(B);
-  thread = (pthread_t*) malloc(num_thrd*sizeof(pthread_t));
+ for (thread = 0; thread < thread_count; thread++)
+   pthread_join(thread_handles[thread], NULL);
 
-  // this for loop not entered if threadd number is specified as 1
-  for (i = 1; i < num_thrd; i++)
-  {
-    // creates each thread working on its own slice of i
-    if (pthread_create (&thread[i], NULL, multiply, (void*)i) != 0 )
-    {
-      perror("Can't create thread");
-      free(thread);
-      exit(-1);
-    }
-  }
+ sum = 4.0*sum;
+ printf("With n = %lld terms,\n", n);
+ printf("   Our estimate of pi = %.15f\n", sum);
+ sum = Serial_pi(n);
+ printf("   Single thread est  = %.15f\n", sum);
+ printf("                   pi = %.15f\n", 4.0*atan(1.0));
 
-  // main thread works on slice 0
-  // so everybody is busy
-  // main thread does everything if threadd number is specified as 1
-  multiply(0);
+ free(thread_handles);
+ return 0;
+}  /* main */
 
-  // main thead waiting for other thread to complete
-  for (i = 1; i < num_thrd; i++)
-    pthread_join (thread[i], NULL);
+/*------------------------------------------------------------------
+* Function:       Thread_sum
+* Purpose:        Add in the terms computed by the thread running this
+* In arg:         rank
+* Ret val:        ignored
+* Globals in:     n, thread_count
+* Global in/out:  sum
+*/
+void* Thread_sum(void* rank) {
+ long my_rank = (long) rank;
+ double factor;
+ long long i;
+ long long my_n = n/thread_count;
+ long long my_first_i = my_n*my_rank;
+ long long my_last_i = my_first_i + my_n;
 
-  printf("\n\n");
-  print_matrix(A);
-  printf("\n\n\t       * \n");
-  print_matrix(B);
-  printf("\n\n\t       = \n");
-  print_matrix(C);
-  printf("\n\n");
+ if (my_first_i % 2 == 0)
+   factor = 1.0;
+ else
+   factor = -1.0;
 
-  free(thread);
+ for (i = my_first_i; i < my_last_i; i++, factor = -factor) {
+   sum += factor/(2*i+1);
+ }
 
-  return 0;
+ return NULL;
+}  /* Thread_sum */
 
-}
+/*------------------------------------------------------------------
+* Function:   Serial_pi
+* Purpose:    Estimate pi using 1 thread
+* In arg:     n
+* Return val: Estimate of pi using n terms of Maclaurin series
+*/
+double Serial_pi(long long n) {
+ double sum = 0.0;
+ long long i;
+ double factor = 1.0;
+
+ for (i = 0; i < n; i++, factor = -factor) {
+   sum += factor/(2*i+1);
+ }
+ return 4.0*sum;
+
+}  /* Serial_pi */
+
+/*------------------------------------------------------------------
+* Function:    Get_args
+* Purpose:     Get the command line args
+* In args:     argc, argv
+* Globals out: thread_count, n
+*/
+void Get_args(int argc, char* argv[]) {
+ if (argc != 3) Usage(argv[0]);
+ thread_count = strtol(argv[1], NULL, 10);
+ if (thread_count <= 0 || thread_count > MAX_THREADS) Usage(argv[0]);
+ n = strtoll(argv[2], NULL, 10);
+ if (n <= 0) Usage(argv[0]);
+}  /* Get_args */
+
+/*------------------------------------------------------------------
+* Function:  Usage
+* Purpose:   Print a message explaining how to run the program
+* In arg:    prog_name
+*/
+void Usage(char* prog_name) {
+ fprintf(stderr, "usage: %s <number of threads> <n>\n", prog_name);
+ fprintf(stderr, "   n is the number of terms and should be >= 1\n");
+ fprintf(stderr, "   n should be evenly divisible by the number of threads\n");
+ exit(0);
+}  /* Usage */
