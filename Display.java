@@ -15,9 +15,9 @@ public class Display extends JFrame {
         Border blackline = BorderFactory.createLineBorder(Color.black);
 
         //declares the number of rows by dividing the generations by the square root
-      int rows =(int) Math.sqrt(retRows());
+        int rows =(int) Math.sqrt(retRows());
 
-      //declaring items for the GUI
+        //declaring items for the GUI
         Container contentPane = getContentPane();
         contentPane.setLayout(new GridLayout(rows+1, rows));
         JPanel[] panelarray = new JPanel[newArray[0].length];
@@ -32,7 +32,7 @@ public class Display extends JFrame {
                 panelarray[j].setBorder(blackline);
                 //if statement to determine the color of the panel of each index in the array for that generation
                 if(retsus()[i][j] == 'A'){
-                   panelarray[j].setBackground(Color.white);
+                    panelarray[j].setBackground(Color.white);
                 }//sus count
                 else if(retsus()[i][j] == 'B' ||retsus()[i][j] == 'D'){
                     panelarray[j].setBackground(Color.black);
@@ -114,23 +114,30 @@ public class Display extends JFrame {
         //declaring characterArray
         char characterArray[][] = new char[generations.length * generations[0].length()][generations[0].length()];
 
-
+        //loops through the each generation
         for (int i =0; i<generations.length; i++){
+            //loop through each char in gen[i]
             for(int j = 0; j<generations[i].length();j++) {
+                //set the position [j] of the generation to the char at [j] of gen [i]
                 characterArray[i][j] = generations[i].charAt(j);
+                //check if Cell is Sus
                 if(generations[i].charAt(j) == 'A'){
                     susCount = susCount+1;
                 }//sus count
+                //check if Cell is Dead or Removed
                 else if(generations[i].charAt(j) == 'B' ||generations[i].charAt(j) == 'D'){
                     deceasedCount=deceasedCount+1;
                 }//dead count
+                //check if Cell is Infected
                 else if(generations[i].charAt(j) == 'C'){
                     infectCount=infectCount+1;
                 }//infect count
+                //all other possible values are In Immunity Stage
                 else{
                     recoveredCount=recoveredCount+1;
                 }//immune count
             }
+            //sets the values of the counters to the arrays then resets the counters
             susArray[i]=susCount;
             susCount=0;
             deceasedArray[i]=deceasedCount;
@@ -141,9 +148,7 @@ public class Display extends JFrame {
             recoveredCount=0;
 
         }
-        for (int i =0; i<generations.length; i++){
-            for(int j = 0; j<generations[i].length();j++) {
-            }}
+
 
         return characterArray;
     }
