@@ -15,7 +15,7 @@ public class Display extends JFrame {
         Border blackline = BorderFactory.createLineBorder(Color.black);
 
         //declares the number of rows by dividing the generations by the square root
-        int rows =(int) Math.sqrt(retRows());
+        int rows = retRows();
 
         //declaring items for the GUI
         Container contentPane = getContentPane();
@@ -24,7 +24,7 @@ public class Display extends JFrame {
         JLabel genLab = new JLabel("",JLabel.CENTER);
 
         //this for loop repeats once per generation
-        for (int i = 0; i <retRows(); i++) {
+        for (int i = 0; i <newArray.length; i++) {
             //this for loop creates 4 panels per generation
             for(int j= 0;   j < newArray[0].length; j++){
                 //creates panel and adds border
@@ -54,7 +54,7 @@ public class Display extends JFrame {
             //+1 is added so it matches the generation count
             genLab.setText("This is Generation "+(i+1));
             //allows the user to process a generation before it is overwritten
-            Thread.sleep(1000);
+            Thread.sleep(10);
             //removes all content from contentpane
             contentPane.removeAll();
         }
@@ -82,8 +82,9 @@ public class Display extends JFrame {
         String[] generations = st.split(",");
 
 
+
         // rowcol is the amount of generations in the array
-        int rowcol = generations.length;
+        int rowcol = (int)Math.sqrt(generations[0].length());
 
         return rowcol;
     }
@@ -112,32 +113,25 @@ public class Display extends JFrame {
         int deceasedCount=0;
         int recoveredCount=0;
         //declaring characterArray
-        char characterArray[][] = new char[generations.length * generations[0].length()][generations[0].length()];
+        char characterArray[][] = new char[generations.length][generations[0].length()];
 
-        //loops through the each generation
+
         for (int i =0; i<generations.length; i++){
-            //loop through each char in gen[i]
             for(int j = 0; j<generations[i].length();j++) {
-                //set the position [j] of the generation to the char at [j] of gen [i]
                 characterArray[i][j] = generations[i].charAt(j);
-                //check if Cell is Sus
                 if(generations[i].charAt(j) == 'A'){
                     susCount = susCount+1;
                 }//sus count
-                //check if Cell is Dead or Removed
                 else if(generations[i].charAt(j) == 'B' ||generations[i].charAt(j) == 'D'){
                     deceasedCount=deceasedCount+1;
                 }//dead count
-                //check if Cell is Infected
                 else if(generations[i].charAt(j) == 'C'){
                     infectCount=infectCount+1;
                 }//infect count
-                //all other possible values are In Immunity Stage
                 else{
                     recoveredCount=recoveredCount+1;
                 }//immune count
             }
-            //sets the values of the counters to the arrays then resets the counters
             susArray[i]=susCount;
             susCount=0;
             deceasedArray[i]=deceasedCount;
@@ -148,7 +142,9 @@ public class Display extends JFrame {
             recoveredCount=0;
 
         }
-
+        for (int i =0; i<generations.length; i++){
+            for(int j = 0; j<generations[i].length();j++) {
+            }}
 
         return characterArray;
     }
