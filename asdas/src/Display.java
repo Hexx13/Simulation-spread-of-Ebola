@@ -2,7 +2,6 @@ import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
 import java.io.*;
-import java.util.Arrays;
 
 public class Display extends JFrame {
 
@@ -27,44 +26,45 @@ public class Display extends JFrame {
         contentPane.setLayout(new GridLayout(rows+1, rows));
         JPanel[] panelarray = new JPanel[newArray[0].length];
         JLabel genLab = new JLabel("",JLabel.CENTER);
-
+        JPanel mainpan = new JPanel(new GridLayout(1,1));
         //this for loop repeats once per generation
         for (int i = 0; i <newArray.length; i++) {
-            //this for loop creates 4 panels per generation
             for(int j= 0;   j < newArray[0].length; j++){
                 //creates panel and adds border
                 panelarray[j] = new JPanel();
                 panelarray[j].setBorder(blackline);
-
+                char[][] thyneArray = newArray;
                 //if statement to determine the color of the panel of each index in the array for that generation
-                if(retsus()[i][j] == 'A'){
-                    panelarray[j].setBackground(Color.white);
+                if(thyneArray[i][j] == 'A'){
+                    panelarray[j].setBackground(Color.green);
                 }//sus count
-                else if(retsus()[i][j] == 'B' ||retsus()[i][j] == 'D'){
+                else if(thyneArray[i][j] == 'B' ||retsus()[i][j] == 'D'){
                     panelarray[j].setBackground(Color.black);
                 }//dead count
-                else if(retsus()[i][j] == 'C'){
+                else if(thyneArray[i][j] == 'C'){
                     panelarray[j].setBackground(Color.red);
                 }//infect count
                 else{
                     panelarray[j].setBackground(Color.blue);
                 }//immune count
                 //these panels are then added to the contentpane
-                contentPane.add(panelarray[j]);
+                mainpan.add(panelarray[j]);
 
                 setSize(1000, 1000);
                 setVisible(true);
+                setDefaultCloseOperation(EXIT_ON_CLOSE);
             }
+            contentPane.add(mainpan);
             //the generation count is added here to avoid being looped
             contentPane.add(genLab);
             //+1 is added so it matches the generation count
             genLab.setText("This is Generation "+(i+1));
             //allows the user to process a generation before it is overwritten
-            Thread.sleep(1000);
+
             //removes all content from contentpane
             contentPane.removeAll();
         }
-
+        //Thread.sleep(10);
 
     }
 
@@ -79,7 +79,7 @@ public class Display extends JFrame {
 
     public int retRows() throws IOException {
 
-        File file = new File("src\\text.txt");
+        File file = new File("text.txt");
         BufferedReader br = new BufferedReader(new FileReader(file));
         //reads in data from the text file line by line, adding it to the string
         String st = br.readLine();
@@ -97,7 +97,7 @@ public class Display extends JFrame {
 
     public char[][] retsus() throws IOException {
 
-        File file = new File("src/text.txt");
+        File file = new File("text.txt");
         BufferedReader br = new BufferedReader(new FileReader(file));
         //reads in data from the file adding it to st
         String st = br.readLine();
@@ -125,7 +125,7 @@ public class Display extends JFrame {
         for (int i =0; i<generations.length; i++){
             for(int j = 0; j<generations[i].length();j++) {
                 characterArray[i][j] = generations[i].charAt(j);
-                if(generations[i].charAt(j) == 'A'){
+                /*if(generations[i].charAt(j) == 'A'){
                     susCount = susCount+1;
 
                 }//sus count
@@ -137,7 +137,7 @@ public class Display extends JFrame {
                 }//infect count
                 else{
                     recoveredCount=recoveredCount+1;
-                }//immune count
+                }//immune count*/
             }
             susArray[i]=susCount;
             susCount=0;
@@ -149,9 +149,7 @@ public class Display extends JFrame {
             recoveredCount=0;
 
         }
-        for (int i =0; i<generations.length; i++){
-            for(int j = 0; j<generations[i].length();j++) {
-            }}
+
 
         return characterArray;
     }
